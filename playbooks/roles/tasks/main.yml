@@ -1,0 +1,9 @@
+---
+- name: set motd
+  become: yes
+  template:
+    src: files/motd.yml
+    dest:  /etc/motd
+    owner: root
+    group: root
+    mode: 0444
