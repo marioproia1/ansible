@@ -6,12 +6,6 @@
   become_user: root
  
   tasks:
-    - name: Set MOTD
-      copy:
-        content: |
-          Welcome to your server!
-          This is a custom MOTD set by Ansible.
-        dest: /etc/motd
-        owner: root
-        group: root
-        mode: '0644'
+    - name: Call motd role
+      roles:
+        - motd
