@@ -3,10 +3,18 @@
 ### Reference guide: https://www.linuxtechi.com/install-ansible-awx-on-kubernetes-cluster/?utm_content=cmp-true
 
 ### 1) Install helm
-$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-$ chmod +x get_helm.sh
-$ ./get_helm.sh
-$ helm version
+```
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+```
+```
+chmod +x get_helm.sh
+```
+```
+./get_helm.sh
+```
+```
+helm version
+```
 
 Alternative on Powershell (run as administrator):
 ```
@@ -15,17 +23,24 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 ```
 choco install openshift-cli 
 ```
+```
 choco install kubernetes-helm 
 ```
 ```
 helm version 
 ```
 ### 2) Install the AWX operator chart
-$ helm repo add awx-operator https://ansible.github.io/awx-operator/
-$ helm install ansible-awx-operator awx-operator/awx-operator -n awx --create-namespace
+```
+helm repo add awx-operator https://ansible.github.io/awx-operator/
+```
+```
+helm install ansible-awx-operator awx-operator/awx-operator -n awx --create-namespace
+```
 
 ### 3) Verify AWX operator installation
-$ kubectl get pods -n awx
+```
+kubectl get pods -n awx
+```
 
 ### 4) Deploy AWX
 Create a file awx.yml:
@@ -41,10 +56,14 @@ spec:
   postgres_storage_class: default
 ```
 Then:
+```
 kubectl apply -f awx.yml
+```
 
 ### 5) Retrieve awx services:
+```
 kubectl get svc -n awx
+```
 
 Example output:
 NAME                                              TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
@@ -53,7 +72,9 @@ ansible-awx-service                               ClusterIP   10.0.223.152   <no
 awx-operator-controller-manager-metrics-service   ClusterIP   10.0.167.149   <none>        8443/TCP   38m
 
 ### 6) Retrieve awx service port:
+```
 kubectl get svc -o yaml ansible-awx-service
+```
 
 Example output:
 apiVersion: v1
@@ -120,10 +141,14 @@ spec:
       port: http
 ```	  
 Then:
+```
 kubectl apply -f awx-ingress.yaml
+```
 
 ### 7) Retrieve admin password secret key for AWX web interface:
+```
 oc get secret -o yaml ansible-awx-admin-password
+```
 
 ### 8) Add to hosts file:
 20.113.125.177 awx.rhsummit.cloud
