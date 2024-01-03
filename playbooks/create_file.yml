@@ -6,6 +6,6 @@
   tasks:
     - name: Ensure the file exists and is empty
       file:
-        path: /path/to/your/file.txt
+        path: /home/mproia/Desktop/test.txt
         state: touch
         mode: '0644'
