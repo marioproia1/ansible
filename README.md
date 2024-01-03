@@ -2,7 +2,7 @@
 ##AWX installation steps on Kubernetes
 ###Reference guide: https://www.linuxtechi.com/install-ansible-awx-on-kubernetes-cluster/?utm_content=cmp-true
 
-1) Install helm
+###1) Install helm
 $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 $ chmod +x get_helm.sh
 $ ./get_helm.sh
@@ -17,14 +17,14 @@ choco install kubernetes-helm
 
 helm version 
 
-2) Install the AWX operator chart
+###2) Install the AWX operator chart
 $ helm repo add awx-operator https://ansible.github.io/awx-operator/
 $ helm install ansible-awx-operator awx-operator/awx-operator -n awx --create-namespace
 
-3) Verify AWX operator installation
+###3) Verify AWX operator installation
 $ kubectl get pods -n awx
 
-4) Deploy AWX
+###4) Deploy AWX
 Create a file awx.yml:
 
 ---
@@ -40,7 +40,7 @@ spec:
 Then:
 kubectl apply -f awx.yml
 
-5) Retrieve awx services:
+###5) Retrieve awx services:
 kubectl get svc -n awx
 
 Example output:
@@ -49,7 +49,7 @@ ansible-awx-postgres-13                           ClusterIP   None           <no
 ansible-awx-service                               ClusterIP   10.0.223.152   <none>        80/TCP     4m5s
 awx-operator-controller-manager-metrics-service   ClusterIP   10.0.167.149   <none>        8443/TCP   38m
 
-6) Retrieve awx service port:
+###6) Retrieve awx service port:
 kubectl get svc -o yaml ansible-awx-service
 
 Example output:
@@ -95,7 +95,7 @@ spec:
 status:
   loadBalancer: {}
 
-7) Deploy awx ingressroute on traefik:
+###7) Deploy awx ingressroute on traefik:
 Create a file awx-ingress.yml:
 
 ---
@@ -119,11 +119,11 @@ spec:
 Then:
 kubectl apply -f awx-ingress.yaml
 
-7) Retrieve admin password secret key for AWX web interface:
+###7) Retrieve admin password secret key for AWX web interface:
 oc get secret -o yaml ansible-awx-admin-password
 
-8) Add to hosts file:
+###8) Add to hosts file:
 20.113.125.177 awx.rhsummit.cloud
 
-9) Log into AWX:
+###9) Log into AWX:
 Type the host name in a search bar, then use "admin" as username and the decoded secret password
