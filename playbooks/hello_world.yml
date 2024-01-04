@@ -1,7 +1,5 @@
----
-- name: Hello World Playbook
-  hosts: localhost
+- hosts: localhost
+  connection: local
   tasks:
-    - name: Output Hello World
-      debug:
-        msg: "Hello World"
+    - debug:
+        msg: "Thank you, my friend!"
