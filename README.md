@@ -131,9 +131,11 @@ metadata:
   name: awx
   namespace: awx
 spec:
+  entryPoints:
+  - https
   routes:
   - kind: Rule
-    match: Host(`awx.rhsummit.cloud`)
+    match: Host(`awx.liquid-reply.net`)
     services:
     - kind: Service
       name: ansible-awx-service
@@ -147,11 +149,8 @@ kubectl apply -f awx-ingress.yaml
 
 ### 7) Retrieve admin password secret key for AWX web interface:
 ```
-oc get secret -o yaml ansible-awx-admin-password
+kubectl get secret -o yaml ansible-awx-admin-password
 ```
 
-### 8) Add to hosts file:
-20.113.125.177 awx.rhsummit.cloud
-
-### 9) Log into AWX:
+### 8) Log into AWX:
 Type the host name in a search bar, then use "admin" as username and the decoded secret password
