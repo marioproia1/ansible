@@ -1,0 +1,29 @@
+---
+- name: Create GitHub Repository
+  hosts: localhost
+  gather_facts: no
+  vars:
+    github_token: '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'
+    repo_name: 'New repository'
+    repo_description: ''
+
+  tasks:
+    - name: Create a new GitHub repository
+      uri:
+        url: "https://api.github.com/user/repos"
+        method: POST
+        body_format: json
+        body: 
+          name: "{{ repo_name }}"
+          description: "{{ repo_description }}"
+          private: false
+        headers:
+          Authorization: "token {{ github_token }}"
+          Accept: "application/vnd.github.v3+json"
+        status_code: 201
+        return_content: yes
+      register: repo_creation_response
+
+    - name: Print response
+      debug:
+        var: repo_creation_response.json
