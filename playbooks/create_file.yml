@@ -46,7 +46,7 @@
 
     - name: Add file to Git
       shell: |
-        git add {{ file_destination }}
+        git add template.yml
       args:
         chdir: "{{ repo_path }}"
 
