@@ -49,7 +49,19 @@
         git add template.yml
       args:
         chdir: "{{ repo_path }}"
-
+        
+    - name: Set Git user name for this commit
+      shell: |
+        git config user.name "marioproia1"
+      args:
+        chdir: "{{ repo_path }}"
+  
+    - name: Set Git user email for this commit
+      shell: |
+        git config user.email "m.proia@reply.it"
+      args:
+        chdir: "{{ repo_path }}"
+        
     - name: Commit file to Git
       shell: |
         git commit -m "Add Ingress Route Template"
