@@ -1,6 +1,7 @@
 ---
 - name: Create Ingress Route Template File
-  hosts: all 
+  hosts: localhost
+  connection: local
   gather_facts: no
   vars:
     app: "your_app"
