@@ -6,6 +6,6 @@
   tasks:
     - name: Ensure the file exists and is empty
       file:
-        path: /home/mproia/Desktop/test.txt
+        path: G:\Il mio Drive\Event-Driven Ansible Demo
         state: touch
         mode: '0644'
