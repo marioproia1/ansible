@@ -67,3 +67,9 @@
         git commit -m "Add Ingress Route Template"
       args:
         chdir: "{{ repo_path }}"
+    - name: Push changes to remote repository
+      shell: |
+        git push origin master
+      args:
+        chdir: "{{ repo_path }}"
+
