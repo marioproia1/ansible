@@ -14,11 +14,11 @@
 
   tasks:
     - name: Clone repository if not exists
-    git:
-      repo: 'https://github.com/marioproia1/ansible-demo.git'
-      dest: "{{ repo_path }}"
-      clone: yes
-      update: no
+      git:
+        repo: 'https://github.com/marioproia1/ansible-demo.git'
+        dest: "{{ repo_path }}"
+        clone: yes
+        update: no
     
     - name: Write the Ingress Route Template
       copy:
