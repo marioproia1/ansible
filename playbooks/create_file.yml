@@ -13,6 +13,13 @@
     file_destination: "{{ repo_path }}/template.yml" 
 
   tasks:
+    - name: Clone repository if not exists
+    git:
+      repo: 'https://github.com/marioproia1/ansible-demo.git'
+      dest: "{{ repo_path }}"
+      clone: yes
+      update: no
+    
     - name: Write the Ingress Route Template
       copy:
         dest: "{{ file_destination }}"
