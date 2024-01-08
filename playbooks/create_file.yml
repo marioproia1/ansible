@@ -42,11 +42,9 @@
         git add {{ file_destination }}
       args:
         chdir: "{{ repo_path }}"
-      when: ansible_check_mode is not defined
 
     - name: Commit file to Git
       shell: |
         git commit -m "Add Ingress Route Template"
       args:
         chdir: "{{ repo_path }}"
-      when: ansible_check_mode is not defined
