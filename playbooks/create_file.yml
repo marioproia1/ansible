@@ -5,6 +5,6 @@
   tasks:
     - name: Ensure the file exists and is empty
       file:
-        path: G:\Il mio Drive\Event-Driven Ansible Demo
+        path: C:\Users\m.proia\Desktop\traefik
         state: touch
         mode: '0644'
