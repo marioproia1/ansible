@@ -1,10 +1,35 @@
 ---
-- name: Create an empty text file
-  hosts: all
+- name: Create Ingress Route Template File
+  hosts: localhost
+  gather_facts: no
+  vars:
+    app: "your_app"
+    route_name: "your_route_name"
+    namespace: "your_namespace"
+    service_name: "your_service"
+    service_port: "your_service_port"
+    file_destination: "C:\Users\m.proia\Desktop\traefik\template.yml"
 
   tasks:
-    - name: Ensure the file exists and is empty
-      file:
-        path: C:\Users\m.proia\Desktop\traefik
-        state: touch
-        mode: '0644'
+    - name: Write the Ingress Route Template
+      copy:
+        dest: "{{ file_destination }}"
+        content: |
+          apiVersion: traefik.containo.us/v1alpha1
+          kind: IngressRoute
+          metadata:
+            labels:
+              app: {{ app }}
+            name: {{ route_name }}
+            namespace: {{ namespace }}
+          spec:
+            entryPoints:
+            - https
+            routes:
+            - kind: Rule
+              match: Host(`{{ route_name }}.liquid-reply.net`)
+              services:
+              - kind: Service
+                name: {{ service_name }}
+                namespace: {{ namespace }}
+                port: {{ service_port }}
