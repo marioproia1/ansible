@@ -69,7 +69,7 @@
         chdir: "{{ repo_path }}"
     - name: Push changes to remote repository
       shell: |
-        git push origin master
+        git push origin main
       args:
         chdir: "{{ repo_path }}"
 
