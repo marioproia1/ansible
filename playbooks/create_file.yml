@@ -36,4 +36,4 @@
 
     - name: Message
       debug:
-        msg: New file created to {{ file destination }}
+        msg: New file created to "{{ file destination }}"
