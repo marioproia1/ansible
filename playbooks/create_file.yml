@@ -33,3 +33,7 @@
                 name: {{ service_name }}
                 namespace: {{ namespace }}
                 port: {{ service_port }}
+
+  - name: Message
+    debug:
+      msg: New file created to {{ file destination }}
