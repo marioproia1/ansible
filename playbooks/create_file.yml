@@ -8,7 +8,7 @@
     namespace: "your_namespace"
     service_name: "your_service"
     service_port: "your_service_port"
-    file_destination: "C:\\Users\\m.proia\\Desktop\\traefik\\template.yml"
+    file_destination: "C:\Users\m.proia\Desktop\traefik\template.yml"
 
   tasks:
     - name: Write the Ingress Route Template
