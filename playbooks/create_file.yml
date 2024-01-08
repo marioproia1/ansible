@@ -19,7 +19,14 @@
         dest: "{{ repo_path }}"
         clone: yes
         update: no
-    
+        
+    - name: Git Pull
+      git:
+        repo: "{{ repo_path }}"
+        version: "main"
+        update: yes
+      register: git_pull_result
+      
     - name: Write the Ingress Route Template
       copy:
         dest: "{{ file_destination }}"
