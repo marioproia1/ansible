@@ -9,8 +9,8 @@
     namespace: "your_namespace"
     service_name: "your_service"
     service_port: "your_service_port"
-    repo_path: "C:/Users/m.proia/ansible-demo"  
-    file_destination: "{{ repo_path }}/template.yml" 
+    repo_path: "C:\\Users\\m.proia\\ansible-demo"  
+    file_destination: "{{ repo_path }}\\template.yml" 
 
   tasks:
     - name: Write the Ingress Route Template
