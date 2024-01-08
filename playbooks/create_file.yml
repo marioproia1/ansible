@@ -1,6 +1,6 @@
 ---
 - name: Create Ingress Route Template File
-  hosts: all
+  hosts: all  # Replace 'all' with a specific host or group if needed
   gather_facts: no
   vars:
     app: "your_app"
@@ -19,9 +19,9 @@
           kind: IngressRoute
           metadata:
             labels:
-              app: {{ app }}
-            name: {{ route_name }}
-            namespace: {{ namespace }}
+              app: "{{ app }}"
+            name: "{{ route_name }}"
+            namespace: "{{ namespace }}"
           spec:
             entryPoints:
             - https
@@ -30,10 +30,10 @@
               match: Host(`{{ route_name }}.liquid-reply.net`)
               services:
               - kind: Service
-                name: {{ service_name }}
-                namespace: {{ namespace }}
-                port: {{ service_port }}
+                name: "{{ service_name }}"
+                namespace: "{{ namespace }}"
+                port: "{{ service_port }}"
 
-    - name: Message
+    - name: Confirmation Message
       debug:
-        msg: New file created to "{{ file destination }}"
+        msg: "New file created at {{ file_destination }}"
