@@ -40,7 +40,7 @@
         
     - name: Slurp file content
       slurp:
-        src: /path/to/your/file.txt
+        src: "{{ file_destination }}"
       register: file_content
 
     - name: Print file content
