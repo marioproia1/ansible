@@ -1,5 +1,5 @@
 ---
-- name: Create Ingress Route Template File
+- name: Create Ingress Route Template File in Repository
   hosts: localhost
   connection: local
   gather_facts: no
@@ -9,42 +9,44 @@
     namespace: "your_namespace"
     service_name: "your_service"
     service_port: "your_service_port"
-    file_destination: "/home/Desktop/traefik/template.yml"
+    repo_path: "https://github.com/marioproia1/ansible-demo"  
+    file_destination: "{{ repo_path }}/template.yml" 
 
   tasks:
     - name: Write the Ingress Route Template
       copy:
         dest: "{{ file_destination }}"
         content: |
+          ---
           apiVersion: traefik.containo.us/v1alpha1
           kind: IngressRoute
           metadata:
             labels:
-              app: "{{ app }}"
-            name: "{{ route_name }}"
-            namespace: "{{ namespace }}"
+              app: <APP>
+            name: <NOME_ROTTA>
+            namespace: <NAMESPACE>
           spec:
             entryPoints:
             - https
             routes:
             - kind: Rule
-              match: Host(`{{ route_name }}.liquid-reply.net`)
+              match: Host(`<NOME_ROTTA>.liquid-reply.net`)
               services:
               - kind: Service
-                name: "{{ service_name }}"
-                namespace: "{{ namespace }}"
-                port: "{{ service_port }}"
+                name: <SERVICE>
+                namespace: <NAMESPACE>
+                port: <PORTA_SERVICE>
 
-    - name: Confirmation message
-      debug:
-        msg: "New file created at {{ file_destination }}"
-        
-    - name: Slurp file content
-      slurp:
-        src: "{{ file_destination }}"
-      register: file_content
+    - name: Add file to Git
+      shell: |
+        git add {{ file_destination }}
+      args:
+        chdir: "{{ repo_path }}"
+      when: ansible_check_mode is not defined
 
-    - name: Print file content
-      debug:
-        msg: "{{ (file_content['content'] | b64decode) }}"
-
+    - name: Commit file to Git
+      shell: |
+        git commit -m "Add Ingress Route Template"
+      args:
+        chdir: "{{ repo_path }}"
+      when: ansible_check_mode is not defined
