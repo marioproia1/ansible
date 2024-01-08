@@ -1,6 +1,6 @@
 ---
 - name: Create Ingress Route Template File
-  hosts: all  # Replace 'all' with a specific host or group if needed
+  hosts: all 
   gather_facts: no
   vars:
     app: "your_app"
@@ -34,6 +34,16 @@
                 namespace: "{{ namespace }}"
                 port: "{{ service_port }}"
 
-    - name: Confirmation Message
+    - name: Confirmation message
       debug:
         msg: "New file created at {{ file_destination }}"
+        
+    - name: Slurp file content
+      slurp:
+        src: /path/to/your/file.txt
+      register: file_content
+
+    - name: Print file content
+      debug:
+        msg: "{{ (file_content['content'] | b64decode) }}"
+
