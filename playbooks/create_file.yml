@@ -22,10 +22,11 @@
         
     - name: Git Pull
       git:
-        repo: "{{ repo_path }}"
-        version: "main"
-        update: yes
-      register: git_pull_result
+        repo: 'https://github.com/marioproia1/ansible-demo.git'
+        dest: "{{ repo_path }}"  
+        update: true
+      args:
+        chdir: "{{ repo_path }}"
       
     - name: Write the Ingress Route Template
       copy:
