@@ -1,11 +1,81 @@
 ---
-- name: Create an empty text file
-  hosts: all
-  become: yes
+- name: Create Ingress Route Template File in Repository
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    app: "your_app"
+    route_name: "your_route_name"
+    namespace: "your_namespace"
+    service_name: "your_service"
+    service_port: "your_service_port"
+    repo_path: "C:/Users/m.proia/ansible-demo" 
+    file_destination: "{{ repo_path }}/template.yml" 
 
   tasks:
-    - name: Ensure the file exists and is empty
-      file:
-        path: /home/mproia/Desktop/test.txt
-        state: touch
-        mode: '0644'
+    - name: Clone repository if not exists
+      git:
+        repo: 'https://github.com/marioproia1/ansible-demo.git'
+        dest: "{{ repo_path }}"
+        clone: yes
+        update: no
+        
+    - name: Git Pull
+      git:
+        repo: 'https://github.com/marioproia1/ansible-demo.git'
+        dest: "{{ repo_path }}"  
+        update: true
+      
+    - name: Write the Ingress Route Template
+      copy:
+        dest: "{{ file_destination }}"
+        content: |
+          ---
+          apiVersion: traefik.containo.us/v1alpha1
+          kind: IngressRoute
+          metadata:
+            labels:
+              app: <APP>
+            name: <NOME_ROTTA>
+            namespace: <NAMESPACE>
+          spec:
+            entryPoints:
+            - https
+            routes:
+            - kind: Rule
+              match: Host(`<NOME_ROTTA>.liquid-reply.net`)
+              services:
+              - kind: Service
+                name: <SERVICE>
+                namespace: <NAMESPACE>
+                port: <PORTA_SERVICE>
+
+    - name: Add file to Git
+      shell: |
+        git add template.yml
+      args:
+        chdir: "{{ repo_path }}"
+        
+    - name: Set Git user name for this commit
+      shell: |
+        git config user.name "marioproia1"
+      args:
+        chdir: "{{ repo_path }}"
+  
+    - name: Set Git user email for this commit
+      shell: |
+        git config user.email "m.proia@reply.it"
+      args:
+        chdir: "{{ repo_path }}"
+        
+    - name: Commit file to Git
+      shell: |
+        git commit -m "Add Ingress Route Template"
+      args:
+        chdir: "{{ repo_path }}"
+    - name: Push changes to remote repository
+      shell: |
+        git push origin main
+      args:
+        chdir: "{{ repo_path }}"
+
