@@ -25,8 +25,6 @@
         repo: 'https://github.com/marioproia1/ansible-demo.git'
         dest: "{{ repo_path }}"  
         update: true
-      args:
-        chdir: "{{ repo_path }}"
       
     - name: Write the Ingress Route Template
       copy:
